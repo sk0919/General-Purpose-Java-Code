@@ -174,3 +174,68 @@ In this Java 9 example:
 
 The `@SafeVarargs` annotation helps ensure safe use of varargs, especially when dealing with generics. It allows us to declare that certain methods will not cause heap pollution. In Java 9, we can also apply it to private methods, further enhancing its utility. 🌟
 
+Certainly! Let's explore the **Java 9 collection factory methods** in detail and highlight the differences from previous approaches. These factory methods provide a concise way to create small unmodifiable collections (such as lists, sets, and maps) with a single line of code.
+
+
+
+# Java 9 Collection Factory Methods
+
+### Overview
+
+In Java 9, convenience factory methods were introduced for creating immutable collections. These methods allow you to initialize collections (such as lists and sets) in a concise and readable manner. The resulting collections are unmodifiable, meaning that no elements can be added, removed, or modified after initialization.
+
+### Motivation
+
+Before Java 9, creating small immutable collections was verbose and involved unnecessary code. Let's consider an example using a set:
+
+```java
+Set<String> set = new HashSet<>();
+set.add("foo");
+set.add("bar");
+set.add("baz");
+set = Collections.unmodifiableSet(set);
+```
+
+This approach required multiple lines of code and wasn't intuitive. Additionally, there was no straightforward way to create unmodifiable maps using existing methods.
+
+### Java 9 Factory Methods
+
+Java 9 introduced static factory methods for the following interfaces:
+
+1. **List**: `List.of(...)`
+2. **Set**: `Set.of(...)`
+3. **Map**: `Map.of(...)`
+
+These methods take the elements as arguments and return an instance of the corresponding collection type. Let's explore each type:
+
+#### 1. List and Set
+
+The signature and characteristics of the factory methods for lists and sets are the same:
+
+- `static <E> List<E> of(E e1, E e2, E e3)`
+- `static <E> Set<E> of(E e1, E e2, E e3)`
+
+Usage examples:
+
+```java
+List<String> list = List.of("foo", "bar", "baz");
+Set<String> set = Set.of("foo", "bar", "baz");
+```
+
+As you can see, these methods are simple, short, and concise. You can use them to create lists and sets of specific sizes (in this case, size 3). There are also overloaded versions of these methods for different numbers of elements (from 0 to 10) and a varargs version.
+
+#### 2. Map
+
+For maps, the factory method is:
+
+- `static <K, V> Map<K, V> of(K k1, V v1, K k2, V v2, ...)`
+
+Usage example:
+
+```java
+Map<String, Integer> map = Map.of("one", 1, "two", 2, "three", 3);
+```
+
+### Summary
+
+Java 9's collection factory methods simplify the creation of small unmodifiable collections. They are concise, intuitive, and eliminate unnecessary code. Remember that the resulting collections are immutable, so any attempt to modify them will throw an `UnsupportedOperationException`. 🌟
