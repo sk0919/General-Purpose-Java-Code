@@ -1,4 +1,4 @@
-#The major features introduced in **Java 8**:#
+# The major features introduced in **Java 8**: #
 
 1. **Lambda Expressions**:
    - Lambda expressions provide a concise way to represent a method of a functional interface using an expression.
