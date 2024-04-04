@@ -96,3 +96,81 @@ public class TryWithResourcesExample {
 ```
 
 In this Java 9 code, the resource reference variable `fileStream` is created outside the `try` block, and it works seamlessly within the `try-with-resources` construct. The file is written successfully, and there are no compile errors.
+
+
+
+# New Feature SafeVarargs :- explore the **`@SafeVarargs`** annotation in both Java 7 and Java 9, along with code examples to highlight the differences.
+
+## `@SafeVarargs` Annotation
+
+### Overview
+
+The `@SafeVarargs` annotation is used to suppress unsafe operation warnings related to varargs (variable-length argument lists) at compile time. These warnings occur when we invoke a method that has varargs, potentially causing heap pollution.
+
+### Java 7 Example
+
+In Java 7, the `@SafeVarargs` annotation can be applied to **final or static methods** and constructors. It indicates that the method does not perform unsafe operations on its varargs parameter.
+
+Let's consider an example:
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class SafeVarargsExample {
+    @SafeVarargs
+    public final <T> void safePrint(T... elements) {
+        for (T element : elements) {
+            System.out.println(element);
+        }
+    }
+
+    public static void main(String[] args) {
+        SafeVarargsExample example = new SafeVarargsExample();
+        List<String> names = new ArrayList<>();
+        names.add("Alice");
+        names.add("Bob");
+        names.add("Charlie");
+
+        example.safePrint(names, "David", "Eve");
+    }
+}
+```
+
+In this Java 7 example:
+- We define a method called `safePrint` that takes a varargs parameter of type `T`.
+- The method is marked with `@SafeVarargs`.
+- We use the method to print a list of names along with additional names.
+
+### Java 9 Enhancement
+
+In Java 9, the use of `@SafeVarargs` was extended. Now, apart from final or static methods, we can also apply it to **private methods**. Private methods cannot be overridden, making them safe for varargs.
+
+Here's an example using Java 9:
+
+```java
+import java.util.Arrays;
+
+public class SafeVarargsJava9Example {
+    @SafeVarargs
+    private <T> T sum(T... values) {
+        return Arrays.stream(values).reduce(null, (a, b) -> (a == null) ? b : a);
+    }
+
+    public static void main(String[] args) {
+        SafeVarargsJava9Example example = new SafeVarargsJava9Example();
+        Integer result = example.sum(1, 2, 3, 4);
+        System.out.println("Sum: " + result);
+    }
+}
+```
+
+In this Java 9 example:
+- We define a private method called `sum` that takes varargs of type `T`.
+- The method is marked with `@SafeVarargs`.
+- We use the method to calculate the sum of integers.
+
+### Conclusion
+
+The `@SafeVarargs` annotation helps ensure safe use of varargs, especially when dealing with generics. It allows us to declare that certain methods will not cause heap pollution. In Java 9, we can also apply it to private methods, further enhancing its utility. 🌟
+
