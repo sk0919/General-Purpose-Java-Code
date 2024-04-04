@@ -70,15 +70,3 @@ Let's dive into the concept of **generic type parameters** in Java. Generics all
    - Avoid casting: Eliminate the need for explicit type casting.
 
 Generics are powerful tools for creating flexible and reusable code. They enhance the expressiveness and safety of your Java programs! 🚀
-
-Source: Conversation with Bing, 4/4/2024
-(1) Generic Types (The Java™ Tutorials > Learning the Java Language .... https://docs.oracle.com/javase/tutorial/java/generics/types.html.
-(2) Java - Generics - Online Tutorials Library. https://www.tutorialspoint.com/java/java_generics.htm.
-(3) Generics in Java - GeeksforGeeks. https://www.geeksforgeeks.org/generics-in-java/.
-(4) Generic Methods (The Java™ Tutorials > Learning the Java Language .... https://docs.oracle.com/javase/tutorial/java/generics/methods.html.
-(5) generic type parameter in java|Default Values : Primitive Data Type. https://minigranth.in/core-java-tutorial/data-types-in-java.
-(6) generic type parameter in java|Data types and Identifier in Java || CseWorld Online. http://www.cseworldonline.com/javatutorial/java_datatype_identifier.php.
-(7) generic type parameter in java|Introduction to Java Programming Notes-130 - 752 Chapter 19 Generics a .... https://www.studocu.com/in/document/adithya-institute-of-technology/computer-networks/introduction-to-java-programming-notes-130/55215582.
-(8) generic type parameter in java|GENERIC TYPES AND THE JAVA COLLECTIONS FRAMEWORK Types and J… · Java .... https://fdocuments.in/document/generic-types-and-the-java-collections-types-and-j-java-collections-framework.html.
-(9) generic type parameter in java|Data Types In Java: Primitive And Non Primitive Data Types In Java .... https://www.fita.in/primitive-and-non-primitive-data-types-in-java/.
-(10) generic type parameter in java|Example. https://minigranth.in/core-java-tutorial/exception-handling-in-java.
