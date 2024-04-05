@@ -583,3 +583,401 @@ In summary, anonymous inner classes are a good choice when handling multiple met
 
 - Variables declared inside an anonymous inner class have their own scope.
 - The `this` keyword refers to the inner class instance, not the outer class.
+
+
+
+## 11. In Java 8, a **Predicate** is a functional interface that allows you to test a value or an object against a condition and returns a **boolean** value. It's part of the `java.util.function` package and contains only one abstract method: `boolean test(T t)`, where `T` represents the type of the input argument.
+
+Let's dive into more detail with examples:
+
+1. **Creating a Simple Predicate**:
+    - Suppose we want to check if an integer is less than 18. We can create a simple `Predicate<Integer>` as follows:
+
+    ```java
+    import java.util.function.Predicate;
+
+    public class PredicateInterfaceExample1 {
+        public static void main(String[] args) {
+            Predicate<Integer> lesserThan = i -> (i < 18);
+            System.out.println(lesserThan.test(10)); // Output: true
+        }
+    }
+    ```
+
+    In this example, the `lesserThan` predicate tests whether the given integer is less than 18.
+
+2. **Predicate Chaining**:
+    - You can combine multiple predicates using logical operations like `and`, `or`, and `negate`.
+    - Let's say we want to check if a number is greater than 10 and less than 20:
+
+    ```java
+    import java.util.function.Predicate;
+
+    public class PredicateInterfaceExample2 {
+        public static void main(String[] args) {
+            Predicate<Integer> greaterThanTen = i -> i > 10;
+            Predicate<Integer> lowerThanTwenty = i -> i < 20;
+
+            boolean result = greaterThanTen.and(lowerThanTwenty).test(15);
+            System.out.println(result); // Output: true
+        }
+    }
+    ```
+
+    Here, we've combined two predicates using `and`. The `result` will be `true` if the number is greater than 10 and less than 20.
+
+3. **Other Useful Methods**:
+    - `isEqual(Object targetRef)`: Returns a predicate that tests if two arguments are equal according to `Objects.equals(Object, Object)`.
+    - `negate()`: Returns a predicate that represents the logical negation of the original predicate.
+    - `or(Predicate other)`: Returns a composed predicate that represents a short-circuiting logical OR of the original predicate and another.
+
+Remember, **Predicates** are powerful tools for filtering and processing data, especially when working with collections using the Stream API. They improve code manageability and allow you to express complex conditions concisely. 🚀
+
+
+## 12. In Java 8, a **functional interface** is an interface that has exactly one abstract method. It is also known as a **Single Abstract Method (SAM) interface**. These interfaces play a crucial role in enabling the use of **lambda expressions**, which provide a more concise and expressive way to write functional-style code.
+
+Let's explore functional interfaces in more detail:
+
+1. **Introduction to Functional Interfaces**:
+    - A functional interface contains only one abstract method.
+    - From Java 8 onwards, **lambda expressions** can be used to represent instances of functional interfaces.
+    - A functional interface can also have any number of **default methods**.
+    - It's recommended that all functional interfaces have an informative `@FunctionalInterface` annotation. This communicates the purpose of the interface and allows the compiler to generate an error if the annotated interface does not satisfy the conditions.
+
+2. **Function Interface**:
+    - The most simple and general case of a lambda is a functional interface with a method that receives one value and returns another.
+    - The `Function` interface, parameterized by the types of its argument and return value, represents such a function:
+        ```java
+        import java.util.function.Function;
+
+        public interface Function<T, R> {
+            R apply(T t);
+        }
+        ```
+    - One common usage of the `Function` type in the standard library is the `Map.computeIfAbsent` method. This method returns a value from a map by key, but calculates a value if the key is not already present:
+        ```java
+        import java.util.Map;
+        import java.util.HashMap;
+
+        public class FunctionInterfaceExample {
+            public static void main(String[] args) {
+                Map<String, Integer> nameMap = new HashMap<>();
+                Integer value = nameMap.computeIfAbsent("John", s -> s.length());
+                System.out.println(value); // Output: 4 (length of "John")
+            }
+        }
+        ```
+    - In this example, we calculate a value by applying a function to a key, put it inside a map, and return it from the method call.
+
+3. **Other Functional Interfaces**:
+    - Besides `Function`, Java 8 provides several other functional interfaces such as `Predicate`, `Consumer`, `Supplier`, and more.
+    - Each of these interfaces serves a specific purpose and allows you to express different types of behavior concisely using lambda expressions.
+
+Remember, functional interfaces are powerful tools for writing expressive and functional-style code in Java. They simplify the creation of anonymous functions and enhance code readability. 🚀
+
+
+## 13. In Java 8, the **Consumer** interface is a powerful functional interface that allows you to perform operations on an input value without returning any result. It's part of the `java.util.function` package and is widely used for side-effect operations.
+
+Let's explore the `Consumer` interface in detail with examples:
+
+1. **Creating a Simple Consumer**:
+    - A `Consumer` takes an input value (of type `T`) and performs an operation on it. It doesn't return any value.
+    - Here's an example of a simple `Consumer` that prints an integer:
+
+    ```java
+    import java.util.function.Consumer;
+
+    public class ConsumerExample {
+        public static void main(String[] args) {
+            Consumer<Integer> display = a -> System.out.println(a);
+            display.accept(10); // Output: 10
+        }
+    }
+    ```
+
+    In this example, the `display` consumer accepts an integer and prints it.
+
+2. **Chaining Consumers with `andThen()`**:
+    - You can chain multiple consumers together using the `andThen()` method. It creates a new consumer that executes the first consumer followed by the second one.
+    - For instance, let's modify a list of integers by doubling each element and then display the modified list:
+
+    ```java
+    import java.util.ArrayList;
+    import java.util.List;
+    import java.util.function.Consumer;
+
+    public class ConsumerChainingExample {
+        public static void main(String[] args) {
+            Consumer<List<Integer>> modify = list -> {
+                for (int i = 0; i < list.size(); i++)
+                    list.set(i, 2 * list.get(i));
+            };
+
+            Consumer<List<Integer>> dispList = list ->
+                list.stream().forEach(a -> System.out.print(a + " "));
+
+            List<Integer> list = new ArrayList<>();
+            list.add(2);
+            list.add(1);
+            list.add(3);
+
+            modify.andThen(dispList).accept(list); // Output: 4 2 6
+        }
+    }
+    ```
+
+    In this example, the `modify` consumer doubles each element in the list, and the `dispList` consumer displays the modified list.
+
+3. **Use Cases for Consumers**:
+    - Consumers are useful when you want to perform actions that don't return a result, such as updating data structures, logging, or printing.
+    - They allow you to separate behavior from control flow, making your code more modular and expressive.
+
+Remember, **Consumers** are essential for functional programming in Java, especially when working with collections and streams. They help you achieve cleaner and more concise code. 🚀
+
+
+## 14. In Java 8, the **Supplier** interface is a powerful functional interface that allows you to obtain a value without taking any input. It's part of the `java.util.function` package and is commonly used for lazy evaluation and deferred computation.
+
+Let's explore the `Supplier` interface in detail with examples:
+
+1. **Introduction to Supplier**:
+    - A `Supplier` represents a function that produces a value of type `T`.
+    - It doesn't take any arguments but provides a result.
+    - The lambda expression assigned to a `Supplier` defines its `get()` method, which eventually produces the value.
+    - Suppliers are useful when you need to obtain a result without supplying any input.
+
+2. **Creating a Simple Supplier**:
+    - Suppose we want to generate a random value. We can create a `Supplier<Double>` as follows:
+
+    ```java
+    import java.util.function.Supplier;
+
+    public class SupplierExample {
+        public static void main(String[] args) {
+            Supplier<Double> randomValue = () -> Math.random();
+            System.out.println(randomValue.get()); // Output: 0.5685808855697841
+        }
+    }
+    ```
+
+    In this example, the `randomValue` supplier produces a random double value.
+
+3. **Use Cases for Suppliers**:
+    - Suppliers are commonly used in scenarios where you want to defer the computation until the value is actually needed. For instance:
+        - **Lazy Initialization**: Creating an object only when it's requested.
+        - **Memoization**: Caching expensive computations.
+        - **Generating Default Values**: Providing fallback values when needed.
+
+4. **Other Supplier Implementations**:
+    - Besides creating custom suppliers, Java 8 provides some built-in suppliers:
+        - `Supplier<T>`: General-purpose supplier.
+        - `BooleanSupplier`: Produces boolean values.
+        - `IntSupplier`: Produces integer values.
+        - `LongSupplier`: Produces long values.
+        - `DoubleSupplier`: Produces double values.
+
+Remember, **Suppliers** are essential for deferred execution and lazy evaluation. They allow you to separate value production from value consumption, improving efficiency and code readability. 🚀
+
+
+
+## 15. The **Java 8** release introduced a revamped **Date-Time API** that addresses the limitations of the older `java.util.Date` and `java.util.Calendar` classes. Let's delve into the details of this new API along with some code examples:
+
+1. **LocalDate**, **LocalTime**, and **LocalDateTime**:
+    - These classes provide a simplified date-time API without the complexity of handling time zones.
+    - **LocalDate**: Represents a date (year, month, and day) without a time component.
+    - **LocalTime**: Represents a time (hours, minutes, seconds, and nanoseconds) without a date component.
+    - **LocalDateTime**: Combines both date and time information.
+    - Here's an example of using these classes:
+
+```java
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+
+public class DateExample {
+    public static void main(String[] args) {
+        LocalDate date = LocalDate.now();
+        System.out.println("Current date: " + date);
+
+        LocalTime time = LocalTime.now();
+        System.out.println("Current time: " + time);
+
+        LocalDateTime current = LocalDateTime.now();
+        System.out.println("Current date and time: " + current);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String formattedDateTime = current.format(formatter);
+        System.out.println("Formatted date and time: " + formattedDateTime);
+
+        Month month = current.getMonth();
+        int day = current.getDayOfMonth();
+        int seconds = current.getSecond();
+        System.out.println("Month: " + month + ", Day: " + day + ", Seconds: " + seconds);
+
+        LocalDate specificDate = LocalDate.of(1950, 1, 26);
+        System.out.println("Republic Day: " + specificDate);
+
+        LocalDateTime specificDateTime = current.withDayOfMonth(24).withYear(2016);
+        System.out.println("Specific date with current time: " + specificDateTime);
+    }
+}
+```
+
+2. **ZonedDateTime**:
+    - Use this specialized date-time API when considering various time zones.
+    - It combines a `LocalDateTime` with a `ZoneId`.
+    - Example:
+
+```java
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+
+public class ZoneExample {
+    public static void main(String[] args) {
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String formattedCurrentDate = date.format(formatter);
+        System.out.println("Formatted current date and time: " + formattedCurrentDate);
+
+        ZonedDateTime currentZone = ZonedDateTime.now();
+        System.out.println("Current zone: " + currentZone.getZone());
+
+        ZoneId tokyo = ZoneId.of("Asia/Tokyo");
+        ZonedDateTime tokyoZone = currentZone.withZoneSameInstant(tokyo);
+        String formattedTokyoZone = tokyoZone.format(formatter);
+        System.out.println("Tokyo time zone: " + formattedTokyoZone);
+    }
+}
+```
+
+In summary, the new Java 8 Date-Time API provides a more robust, thread-safe, and expressive way to handle date and time operations. Feel free to explore these classes further in your projects! 🕰️📅.
+
+
+## 16.  In **Java 8**, the introduction of the **Stream API** revolutionized how we process collections of objects. Let's dive into the details, along with code examples:
+
+1. **What is the Stream API?**
+    - The Stream API is a new abstract layer introduced in Java 8.
+    - It allows functional-style operations on elements within collections.
+    - Streams are designed for efficiency and can enhance program performance by avoiding unnecessary loops and iterations.
+    - You can use streams for filtering, collecting, printing, and converting data structures.
+
+2. **Basic Components of Streams:**
+    - **Sequence of Elements**: Streams represent a sequence of components that can be processed sequentially.
+    - **Source**: Streams take input from collections, arrays, or I/O channels.
+    - **Aggregate Operations**: These operations perform transformations on the stream elements.
+    - **Pipelining**: Intermediate operations (like filtering or mapping) can be pipelined, improving efficiency.
+    - **Internal Iteration**: Streams handle iteration internally, reducing boilerplate code.
+
+3. **Features of Java Stream:**
+    - Streams don't alter the original data structure; they provide results based on pipelined methods.
+    - Intermediate operations are lazily executed, returning a stream as a result.
+    - Terminal operations mark the end of the stream and return the final result.
+
+4. **Example: Filtering Even Numbers**
+    - Suppose we have an `ArrayList` of integers, and we want to filter out even numbers.
+    - Let's see how streams work internally:
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class StreamExample {
+    public static void main(String[] args) {
+        List<Integer> numbers = new ArrayList<>();
+        numbers.add(10);
+        numbers.add(15);
+        numbers.add(20);
+        numbers.add(25);
+
+        // Using stream to filter even numbers
+        List<Integer> evenNumbers = numbers.stream()
+                .filter(n -> n % 2 == 0)
+                .collect(Collectors.toList());
+
+        System.out.println("Even numbers: " + evenNumbers);
+    }
+}
+```
+
+5. **Explanation**:
+    - We create a list of integers (`numbers`).
+    - The stream is obtained from the list using `stream()`.
+    - The `filter()` operation checks if each number is even.
+    - Finally, we collect the filtered numbers into a new list.
+
+6. **Additional Notes**:
+    - Streams can be parallelized for better performance using `parallelStream()`.
+    - Explore other stream operations like `map`, `reduce`, and `forEach`.
+
+Remember, the Stream API simplifies complex operations and promotes a more concise and expressive coding style.
+
+
+
+## 17. Let's explore the **Java 8 Optional** class, which was introduced to handle optional values and reduce the occurrence of **NullPointerExceptions**. I'll provide explanations and code examples to illustrate its usage.
+
+1. **Overview of Java 8 Optional**:
+    - The `Optional` class provides a type-level solution for representing optional values instead of using null references.
+    - It's part of the `java.util` package and aims to make code more robust by avoiding unexpected null values.
+    - Here's why we should care about `Optional`:
+        - It helps prevent null pointer exceptions.
+        - It promotes cleaner and more concise code.
+
+2. **Creating Optional Objects**:
+    - We can create `Optional` objects in several ways:
+        - To create an empty `Optional`, use the `empty()` static method:
+            ```java
+            Optional<String> empty = Optional.empty();
+            assertFalse(empty.isPresent());
+            ```
+        - To create an `Optional` with a non-null value, use `of()`:
+            ```java
+            String name = "baeldung";
+            Optional<String> opt = Optional.of(name);
+            assertTrue(opt.isPresent());
+            ```
+        - If you expect null values, use `ofNullable()`:
+            ```java
+            String nullableName = null;
+            Optional<String> nullableOpt = Optional.ofNullable(nullableName);
+            assertFalse(nullableOpt.isPresent());
+            ```
+
+3. **Checking Value Presence**:
+    - Use `isPresent()` to check if a value exists inside an `Optional`:
+        ```java
+        Optional<String> nonNullOpt = Optional.of("Baeldung");
+        assertTrue(nonNullOpt.isPresent());
+
+        Optional<String> nullOpt = Optional.ofNullable(null);
+        assertFalse(nullOpt.isPresent());
+        ```
+    - As of Java 11, you can also use `isEmpty()` to check if the `Optional` is empty.
+
+4. **Conditional Action with `ifPresent()`**:
+    - Execute a block of code if a value is present:
+        ```java
+        Optional<String> greeting = Optional.of("Hello, world!");
+        greeting.ifPresent(message -> System.out.println("Message: " + message));
+        ```
+
+5. **Default Value with `orElse()`**:
+    - Get the value if present; otherwise, return a default value:
+        ```java
+        Optional<String> maybeName = Optional.ofNullable(null);
+        String name = maybeName.orElse("Unknown");
+        System.out.println("Name: " + name);
+        ```
+
+6. **Default Value with `orElseGet()`**:
+    - Similar to `orElse()`, but the default value is computed lazily:
+        ```java
+        String computedName = maybeName.orElseGet(() -> computeNameFromDatabase());
+        ```
+
+7. **Exceptions with `orElseThrow()`**:
+    - Throw a custom exception if the value is absent:
+        ```java
+        String fetchedName = maybeName.orElseThrow(() -> new NoSuchElementException("Name not found"));
+        ```
+
+Remember, using `Optional` can lead to more robust and expressive code. Explore these methods further and adapt them to your specific use cases! 🚀🔍
+
