@@ -715,7 +715,8 @@ Let's explore functional interfaces in more detail:
    
    This is a simple example, but the `Function` interface is a powerful tool in Java 8 for creating flexible and reusable code. It's often used in conjunction with other features of Java 8 like Stream API and Optional class.
     - One common usage of the `Function` type in the standard library is the `Map.computeIfAbsent` method. This method returns a value from a map by key, but calculates a value if the key is not already present:
-        ```java
+        
+      ```java
         import java.util.Map;
         import java.util.HashMap;
 
