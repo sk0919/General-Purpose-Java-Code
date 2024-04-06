@@ -688,6 +688,32 @@ Let's explore functional interfaces in more detail:
             R apply(T t);
         }
         ```
+
+       - This with a code example. The `Function` interface you've shown is a part of Java 8's `java.util.function` package. It's a       functional interface that represents a function that accepts one argument and produces a result.
+   
+   Here's an example of how you might use it:
+   
+   ```java
+   import java.util.function.Function;
+   
+   public class Main {
+       public static void main(String[] args) {
+           // Here we're creating a Function instance that takes an Integer and returns its square as a String.
+           Function<Integer, String> square = (Integer x) -> {
+               return Integer.toString(x * x);
+           };
+   
+           // Now we can apply this function to an integer.
+           System.out.println(square.apply(5));  // This will output "25".
+       }
+   }
+   ```
+   
+   In this example, `square` is a `Function` that takes an `Integer` and returns a `String`. The `apply` method is implemented with a lambda expression that squares the input integer and converts the result to a string. When we call `square.apply(5)`, it returns the string "25". 
+
+# #
+   
+   This is a simple example, but the `Function` interface is a powerful tool in Java 8 for creating flexible and reusable code. It's often used in conjunction with other features of Java 8 like Stream API and Optional class.
     - One common usage of the `Function` type in the standard library is the `Map.computeIfAbsent` method. This method returns a value from a map by key, but calculates a value if the key is not already present:
         ```java
         import java.util.Map;
