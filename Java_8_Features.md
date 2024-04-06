@@ -1115,3 +1115,63 @@ System.out.println(rectangle); // Output: Rectangle[x=0,y=0,width=10,height=20]
 ```
 
 In this example, `Rectangle::new` is a constructor reference. The Java compiler automatically chooses the correct constructor by matching the signature of `BiFunction<Integer, Integer, Rectangle>`.
+
+
+## ##
+## 20. Date time api code with explanation ##
+
+- **LocalDate**: It represents a date without time or timezone. 
+```java
+LocalDate date = LocalDate.now();
+System.out.println("Current Date: " + date);
+```
+   
+- **LocalTime**: Represents time without a date or timezone.
+```java
+LocalTime time = LocalTime.now();
+System.out.println("Current Time: " + time);
+```
+   
+- **LocalDateTime**: Represents both date and time but no timezone.
+```java
+LocalDateTime dateTime = LocalDateTime.now();
+System.out.println("Current DateTime: " + dateTime);
+```
+   
+- **ZonedDateTime**: Represents a date and time with a timezone.
+```java
+ZonedDateTime zonedDateTime = ZonedDateTime.now();
+System.out.println("Zoned DateTime: " + zonedDateTime);
+```
+   
+- **Instant**: Represents an instantaneous point on the timeline, typically used for machine timestamps.
+```java
+Instant instant = Instant.now();
+System.out.println("Instant Time: " + instant);
+```
+
+- **Duration**: Represents the amount of time between two instants in terms of seconds and nanoseconds.
+```java
+Instant start = Instant.parse("2022-03-20T10:15:30.00Z");
+Instant end = Instant.parse("2022-03-20T10:16:30.00Z");
+Duration duration = Duration.between(start, end);
+System.out.println("Duration in seconds : "+duration.getSeconds());
+```
+
+- **Period**: It deals with the amount of time in terms of years, months, and days.
+```java
+LocalDate startDate= LocalDate.of(2022, 3, 20); 
+LocalDate endDate= LocalDate.of(2023, 3, 20); 
+Period period= Period.between(startDate,endDate); 
+System.out.println(period.getYears()+" years "+
+                   period.getMonths()+" months "+
+                   period.getDays()+" days");
+```
+
+- **DateTimeFormatter**: Used to format dates into strings or parse strings into dates.
+```java
+DateTimeFormatter formatter= DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"); 
+String formattedDateTime= dateTime.format(formatter); 
+System.out.println(formattedDateTime);
+```
+These classes are part of the `java.time` package in Java 8, which provides a comprehensive model for date and time manipulation. It's designed to address the shortcomings of the older `java.util.Date` and `java.util.Calendar` classes. It's also thread-safe, unlike the older classes. Let me know if you need more information! 😊
