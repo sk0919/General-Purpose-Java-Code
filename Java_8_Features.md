@@ -1045,3 +1045,73 @@ Also remember that, the Stream API simplifies complex operations and promotes a 
 
 Remember, using `Optional` can lead to more robust and expressive code. Explore these methods further and adapt them to your specific use cases! 🚀🔍
 
+
+## 18.  BiPredicate, BiFunction, BiConsumer ##
+
+Sure, let's go through each of these functional interfaces in Java 8.
+
+1. **BiPredicate**: A `BiPredicate` is a predicate that takes two arguments and returns a boolean value. It is used when you want to test two values and return a boolean.
+
+```java
+BiPredicate<Integer, String> condition = (i, s) -> i > 20 && s.startsWith("R");
+System.out.println(condition.test(10, "Ram")); // Output: false
+System.out.println(condition.test(30, "Ram")); // Output: true
+```
+
+2. **BiFunction**: A `BiFunction` is a function that takes two arguments and returns a result. This is used when you want to apply some logic to two values and return a result.
+
+```java
+BiFunction<Integer, Integer, String> biFunction = (num1, num2) -> "Result:" + (num1 + num2);
+System.out.println(biFunction.apply(20, 25)); // Output: Result:45
+```
+
+3. **BiConsumer**: A `BiConsumer` is a consumer that takes two arguments and returns no result. This is used when you want to operate on two values and return nothing.
+
+```java
+BiConsumer<Integer, Integer> biConsumer = (a, b) -> System.out.println("a+b=" + (a+b));
+biConsumer.accept(10, 20); // Output: a+b=30
+```
+
+These functional interfaces are very useful when working with lambda expressions and functional programming in Java 8. They provide target types for lambda expressions and method references. Each of these interfaces are available in the `java.util.function` package. I hope this helps! Let me know if you have any other questions.
+
+
+
+## 19. Method References & Constructor References code with explanation ##
+
+1. **Method References**: Method references provide a way to refer to a method without executing it. They relate to lambda expressions, as they, too, require a target type context that consists of a compatible functional interface.
+
+Here are the different types of method references:
+
+- **Static method reference**: They reference a static method of a class.
+
+```java
+Function<String, Integer> mapper = Integer::parseInt;
+Integer value = mapper.apply("123");
+System.out.println(value); // Output: 123
+```
+
+- **Instance method reference of a particular object**: They reference a method of a particular object.
+
+```java
+String string = "Hello, World!";
+Supplier<String> supplier = string::toUpperCase;
+System.out.println(supplier.get()); // Output: HELLO, WORLD!
+```
+
+- **Instance method reference of an arbitrary object**: They reference a method of an arbitrary object of a particular type.
+
+```java
+BiPredicate<List<String>, String> contains = List::contains;
+List<String> list = Arrays.asList("A", "B", "C");
+System.out.println(contains.test(list, "A")); // Output: true
+```
+
+2. **Constructor References**: Constructor references are similar to method references, but instead of referring to an existing method, they refer to a constructor.
+
+```java
+BiFunction<Integer, Integer, Rectangle> rectangleFactory = Rectangle::new;
+Rectangle rectangle = rectangleFactory.apply(10, 20);
+System.out.println(rectangle); // Output: Rectangle[x=0,y=0,width=10,height=20]
+```
+
+In this example, `Rectangle::new` is a constructor reference. The Java compiler automatically chooses the correct constructor by matching the signature of `BiFunction<Integer, Integer, Rectangle>`.
