@@ -908,7 +908,71 @@ public class StreamExample {
     - Streams can be parallelized for better performance using `parallelStream()`.
     - Explore other stream operations like `map`, `reduce`, and `forEach`.
 
-Remember, the Stream API simplifies complex operations and promotes a more concise and expressive coding style.
+
+### CODE with explanations ###
+
+1. **Stream**: A Stream in Java can be seen as a sequence of elements from a source that supports aggregate operations. Here's how you can create a stream from a collection:
+
+```java
+List<String> myList = Arrays.asList("a1", "a2", "b1", "c2", "c1");
+Stream<String> myStream = myList.stream();
+```
+
+2. **Filter**: The `filter` operation is used to filter out elements from a stream that don't satisfy a condition:
+
+```java
+myStream.filter(s -> s.startsWith("c")).forEach(System.out::println);
+// Output: c2, c1
+```
+
+3. **Map**: The `map` operation is used to transform each element of the stream:
+
+```java
+myStream.map(String::toUpperCase).forEach(System.out::println);
+// Output: A1, A2, B1, C2, C1
+```
+
+4. **Distinct**: The `distinct` operation is used to return a stream with unique elements:
+
+```java
+myStream.distinct().forEach(System.out::println);
+// Output: a1, a2, b1, c2, c1
+```
+
+5. **Reduce**: The `reduce` operation performs a reduction on the elements of the stream with the given function. The result is an `Optional`:
+
+```java
+Optional<String> reduced = myStream.reduce((s1, s2) -> s1 + "#" + s2);
+reduced.ifPresent(System.out::println);
+// Output: a1#a2#b1#c2#c1
+```
+
+6. **Limit**: The `limit` operation is used to reduce the size of the stream:
+
+```java
+myStream.limit(3).forEach(System.out::println);
+// Output: a1, a2, b1
+```
+
+7. **Skip**: The `skip` operation discards the first n elements of the stream:
+
+```java
+myStream.skip(3).forEach(System.out::println);
+// Output: c2, c1
+```
+
+8. **Collect**: The `collect` operation is used to receive elements from a stream into a collection:
+
+```java
+List<String> list = myStream.collect(Collectors.toList());
+System.out.println(list);
+// Output: [a1, a2, b1, c2, c1]
+```
+
+Remember to always create a new stream for each terminal operation you perform, as streams can be consumed only once. The above examples are meant to be executed individually. If you try to reuse a stream for a new operation, you'll get an `IllegalStateException`. 
+
+
+Also remember that, the Stream API simplifies complex operations and promotes a more concise and expressive coding style.
 
 
 
