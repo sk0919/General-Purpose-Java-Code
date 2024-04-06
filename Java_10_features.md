@@ -1,4 +1,4 @@
-## Java 10, an implementation of Java Standard Edition 10, was released on March 20, 2018¹². Here are the major new features introduced in Java 10: ##
+## Java 10, an implementation of Java Standard Edition 10, was released on March 20, 2018. Here are the major new features introduced in Java 10: ##
 
 1. **Local Variable Type Inference (JEP 286)** : This feature introduces the `var` keyword, which allows you to declare a local variable without specifying its type. The type of the variable will be inferred from the type of the actual object created².
 
