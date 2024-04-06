@@ -157,6 +157,14 @@ func.doSomething();
         void method2();
     }
     ```
+   ```
+   error: Unexpected @FunctionalInterface annotation
+   @FunctionalInterface
+   ^
+     Interface2 is not a functional interface
+       multiple non-overriding abstract methods found in interface Interface2
+   1 error
+   ```
 
     In this example, `Interface2` extends `Interface1`, so any class that implements `Interface2` will have to provide implementations for both `method1` and `method2`.
 
