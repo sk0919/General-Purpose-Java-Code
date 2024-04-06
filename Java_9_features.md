@@ -206,6 +206,8 @@ Java 9 introduced static factory methods for the following interfaces:
 2. **Set**: `Set.of(...)`
 3. **Map**: `Map.of(...)`
 
+The methods `List.of()`, `Set.of()`, and `Map.of()` were introduced in Java 9. These are static factory methods that allow you to create immutable instances of collections (List, Set, Map) in a more concise and convenient way than was possible in earlier versions of Java.
+
 These methods take the elements as arguments and return an instance of the corresponding collection type. Let's explore each type:
 
 #### 1. List and Set
