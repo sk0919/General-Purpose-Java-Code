@@ -35,7 +35,6 @@ Please note that this is not an exhaustive list and there are other changes and 
 #                                      Detail Explanation with code                                 # 
 
 ## A. String new features ##
-Sure, let's go through these new methods added to the `String` class in Java 11:
 
 1. **isBlank()**: This method checks whether the string is blank or not. It returns `true` if the string is empty or contains only white space characters, otherwise `false`. Here's an example:
 
@@ -85,3 +84,73 @@ public class Main {
 These methods can reduce the amount of boilerplate involved in manipulating string objects, and save us from having to import libraries¹. In the case of the `strip` methods, they provide similar functionality to the more familiar `trim` method; however, with finer control and Unicode support.
 
 
+## B. File new features ##
+
+1. **readString(Path path)** and **readString(Path path, Charset cs)**: These methods read all content from a file into a string. The first method decodes from bytes to characters using the UTF-8 charset¹. The second method does the same but only using the specified charset¹. Here's an example:
+
+```java
+import java.nio.file.Path;
+import java.nio.file.Files;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Path filePath = Path.of("c:/temp/demo.txt");
+        String content = Files.readString(filePath);
+        System.out.println(content);
+    }
+}
+```
+
+2. **writeString(Path path, CharSequence csq, OpenOption... options)** and **writeString(Path path, CharSequence csq, Charset cs, OpenOption... options)**: These methods write a string into a file. The first method uses the UTF-8 charset². The second method does the same but only using the specified charset². Here's an example:
+
+```java
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.io.IOException;
+import java.nio.file.StandardOpenOption;
+
+public class Main {
+    public static void main(String[] args) {
+        Path filePath = Paths.get("C:/", "temp", "test.txt");
+        try {
+            //Write content to file
+            Files.writeString(filePath, "Hello World !!", StandardOpenOption.APPEND);
+
+            //Optionally verify the file content
+            String content = Files.readString(filePath);
+            System.out.println(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+These methods make it easier to read and write Strings from files¹². However, please note that these methods are not intended for reading or writing very large files¹. Otherwise, they may throw `OutOfMemoryError` if the file is extremely large, e.g., larger than 2GB.
+
+
+## C. Let's go through the new `toArray` method added to the `Collection` interface in Java 11: ##
+
+
+**<T> T[] toArray(IntFunction<T[]> generator)**: This method returns an array containing all of the elements in this collection, using the provided generator function to allocate the returned array¹. Here's an example:
+
+```java
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+public class Main {
+    public static void main(String[] args) {
+        List<Integer> list = IntStream.range(0, 10).boxed().collect(Collectors.toList());
+        Integer[] array = list.toArray(Integer[]::new);
+        for (Integer i : array) {
+            System.out.print(i + " ");
+        }
+    }
+}
+```
+
+In this example, `IntStream.range(0, 10).boxed().collect(Collectors.toList())` creates a list of integers from 0 to 9. `list.toArray(Integer[]::new)` converts the list into an array. The `Integer[]::new` is a method reference to the constructor of the `Integer` array, which is used as the generator function to create a new array of the required size¹.
+
+This new `toArray` method provides a type-safe way to convert a collection to an array¹. It's particularly useful when you don't know the size of the collection in advance¹.
