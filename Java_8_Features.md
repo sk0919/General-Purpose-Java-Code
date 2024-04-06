@@ -204,6 +204,32 @@ func.doSomething();
 - They cannot be overridden in implementing classes.
 - Useful for providing common utility methods related to the interface.
 
+  Both static and default methods in an interface **must** have a body.
+
+Here's a brief explanation:
+
+- **Static methods** in an interface are similar to static methods in a class, and they should have a body. They can be called without creating an instance of the interface. Here's an example:
+
+```java
+public interface MyInterface {
+    static void myStaticMethod() {
+        System.out.println("This is a static method in an interface.");
+    }
+}
+```
+
+- **Default methods** are methods in an interface that have a default implementation. They were introduced in Java 8 to allow developers to add new methods to interfaces without breaking existing implementations. Default methods must also have a body. Here's an example:
+
+```java
+public interface MyInterface {
+    default void myDefaultMethod() {
+        System.out.println("This is a default method in an interface.");
+    }
+}
+```
+
+In both cases, the methods have a body within the interface definition. This is different from abstract methods in an interface, which do not have a body and must be implemented by any class that uses the interface.
+
 ## 6. Functional Interface as a Type for Lambda Expressions
 
 - Lambda expressions can be assigned to functional interface objects.
@@ -508,7 +534,7 @@ Remember that lambda expressions work well with functional interfaces, and in th
 - Lambda expressions are preferred for simple behavior.
 
 
-Certainly! Let's explore the differences between **anonymous inner classes** and **lambda expressions** in Java, along with code examples.
+Let's explore the differences between **anonymous inner classes** and **lambda expressions** in Java, along with code examples.
 
 ## **1. Anonymous Inner Class:**
 - An anonymous inner class is an inner class without a name. It is created on the fly and typically used for specific scenarios.
